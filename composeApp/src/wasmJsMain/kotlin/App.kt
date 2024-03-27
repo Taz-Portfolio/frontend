@@ -1,33 +1,46 @@
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
+import androidx.compose.material.Scaffold
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.runtime.Composable
+import moe.tlaster.precompose.PreComposeApp
+import moe.tlaster.precompose.navigation.NavHost
+import moe.tlaster.precompose.navigation.rememberNavigator
+import nav.FloatingNav
+import nav.NavItem
+import org.koin.compose.KoinContext
+import screen.ContactScreen
+import screen.HomeScreen
+import screen.MoreScreen
+import screen.ProjectsScreen
 
-import composewebsite.composeapp.generated.resources.Res
-import composewebsite.composeapp.generated.resources.compose_multiplatform
+val navItems = mapOf(
+    NavItem(Icons.Filled.Home, "Home") to HomeScreen,
+    NavItem(Icons.Filled.Star, "Projects") to ProjectsScreen,
+    NavItem(Icons.Filled.Email, "Contact Me") to ContactScreen,
+    NavItem(Icons.Filled.MoreVert, "More") to MoreScreen
+)
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun App() {
-    MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
-            }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
+    PreComposeApp {
+        KoinContext {
+            val navigator = rememberNavigator()
+            MaterialTheme {
+                Scaffold(
+                    bottomBar = { FloatingNav(navigator, navItems) }
+                ) {
+                    NavHost(
+                        navigator = navigator,
+                        initialRoute = HomeScreen.route
+                    ) {
+                        navItems.forEach { (_, screen) ->
+                            scene(screen.route) { screen.content() }
+                        }
+                    }
                 }
             }
         }
