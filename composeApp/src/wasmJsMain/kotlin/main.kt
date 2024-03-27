@@ -6,9 +6,5 @@ import org.koin.core.context.startKoin
 fun main() {
     startKoin {}
 
-    CanvasBasedWindow(
-        canvasElementId = "ComposeTarget"
-    ) {
-        App()
-    }
+    CanvasBasedWindow(canvasElementId = "ComposeTarget") { App() }
 }

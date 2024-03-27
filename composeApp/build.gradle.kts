@@ -27,21 +27,20 @@ kotlin {
     
     sourceSets {
         commonMain.dependencies {
-            api(compose.runtime)
-            api(compose.material)
-            api(compose.foundation)
-            api(compose.animation)
+            implementation(compose.runtime)
+            implementation(compose.material)
+            implementation(compose.foundation)
+            implementation(compose.animation)
             implementation(compose.ui)
             implementation(compose.components.resources)
 
-            api(libs.precompose)
+            implementation(libs.precompose)
             implementation(libs.koin)
             implementation(libs.koin.compose)
         }
 
         val wasmJsMain by getting {
-            dependencies {
-            }
+            dependencies {}
         }
     }
 }
