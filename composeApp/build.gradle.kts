@@ -35,8 +35,6 @@ kotlin {
             implementation(compose.components.resources)
 
             implementation(libs.precompose)
-            implementation(libs.koin)
-            implementation(libs.koin.compose)
         }
 
         val wasmJsMain by getting {

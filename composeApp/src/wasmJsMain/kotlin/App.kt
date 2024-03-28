@@ -1,46 +1,67 @@
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.CheckCircle
+import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.Home
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.graphics.Color
 import moe.tlaster.precompose.PreComposeApp
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.rememberNavigator
 import nav.FloatingNav
 import nav.NavItem
-import org.koin.compose.KoinContext
 import screen.ContactScreen
 import screen.HomeScreen
 import screen.MoreScreen
 import screen.ProjectsScreen
 
-val navItems = mapOf(
-    NavItem(Icons.Filled.Home, "Home") to HomeScreen,
-    NavItem(Icons.Filled.Star, "Projects") to ProjectsScreen,
-    NavItem(Icons.Filled.Email, "Contact Me") to ContactScreen,
-    NavItem(Icons.Filled.MoreVert, "More") to MoreScreen
+val navItems = mutableMapOf(
+    NavItem(
+        selectedIcon = Icons.Filled.Home,
+        unselectedIcon = Icons.Outlined.Home,
+        label = "Home",
+        selected = mutableStateOf(true)
+    ) to HomeScreen,
+    NavItem(
+        selectedIcon = Icons.Filled.CheckCircle,
+        unselectedIcon = Icons.Outlined.CheckCircle,
+        label = "Projects",
+        selected = mutableStateOf(false)
+    ) to ProjectsScreen,
+    NavItem(
+        selectedIcon = Icons.Filled.Email,
+        unselectedIcon = Icons.Outlined.Email,
+        label = "Contact",
+        selected = mutableStateOf(false)
+    ) to ContactScreen,
+    NavItem(
+        selectedIcon = Icons.Filled.Favorite,
+        unselectedIcon = Icons.Outlined.FavoriteBorder,
+        label = "More",
+        selected = mutableStateOf(false)
+    ) to MoreScreen
 )
 
 @Composable
 fun App() {
     PreComposeApp {
-        KoinContext {
-            val navigator = rememberNavigator()
-            MaterialTheme {
-                Scaffold(
-                    bottomBar = { FloatingNav(navigator, navItems) }
+        val navigator = rememberNavigator()
+        MaterialTheme {
+            Scaffold(
+                bottomBar = { FloatingNav(navigator, navItems) }
+            ) {
+                NavHost(
+                    navigator = navigator,
+                    initialRoute = HomeScreen.route
                 ) {
-                    NavHost(
-                        navigator = navigator,
-                        initialRoute = HomeScreen.route
-                    ) {
-                        navItems.forEach { (_, screen) ->
-                            scene(screen.route) { screen.content() }
-                        }
-                    }
+                    navItems.forEach { (_, screen) -> scene(screen.route) { screen.content() } }
                 }
             }
         }
