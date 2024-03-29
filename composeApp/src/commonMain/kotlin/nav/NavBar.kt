@@ -1,9 +1,12 @@
 package nav
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -47,12 +50,21 @@ fun FloatingNav(navigator: Navigator, navItems: MutableMap<NavItem, Screen>) {
                         navigator.navigate(screen.route)
                     },
                     icon = {
-                        if (navItem.selected.value) Icon(navItem.selectedIcon, contentDescription = null, tint = Color.White)
-                        else Icon(navItem.unselectedIcon, contentDescription = null, tint = Color.White)
+                        if (navItem.selected.value) Icon(
+                            navItem.selectedIcon,
+                            contentDescription = null,
+                            modifier = Modifier.background(Color.DarkGray, CircleShape).width(50.dp),
+                            tint = Color.White
+                        )
+                        else Icon(
+                            navItem.unselectedIcon,
+                            contentDescription = null,
+                            tint = Color.White
+                        )
                     },
                     label = {
                         Text(text = navItem.label, color = Color.White)
-                    }
+                    },
                 )
             }
         }
