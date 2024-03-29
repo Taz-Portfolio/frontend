@@ -46,8 +46,10 @@ fun FloatingNav(navigator: Navigator, navItems: MutableMap<NavItem, Screen>) {
                 BottomNavigationItem(
                     selected = navItem.selected.value,
                     onClick = {
-                        navItems.keys.forEach { it.selected.value = it == navItem }
-                        navigator.navigate(screen.route)
+                        if (navItems.keys.first { it.selected.value } != navItem) {
+                            navItems.keys.forEach { it.selected.value = it == navItem }
+                            navigator.navigate(screen.route)
+                        }
                     },
                     icon = {
                         if (navItem.selected.value) Icon(
