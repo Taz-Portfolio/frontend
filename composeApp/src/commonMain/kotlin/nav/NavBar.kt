@@ -1,22 +1,18 @@
 package nav
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.BlurredEdgeTreatment
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -37,13 +33,13 @@ fun FloatingNav(navigator: Navigator, navItems: MutableMap<NavItem, Screen>) {
         modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
         horizontalArrangement = Arrangement.Center
     ) {
-        BottomNavigation(
-            modifier = Modifier.clip(CircleShape).fillMaxWidth(0.5f),
-            backgroundColor = Color.Black.copy(alpha = 0.5f),
-            elevation = 0.dp
+        NavigationBar(
+            modifier = Modifier.clip(CircleShape).fillMaxWidth(0.4f).height(60.dp),
+            containerColor = Color.Black.copy(alpha = 0.5f),
+            tonalElevation = 0.dp
         ) {
             navItems.forEach { (navItem, screen) ->
-                BottomNavigationItem(
+                NavigationBarItem(
                     selected = navItem.selected.value,
                     onClick = {
                         if (navItems.keys.first { it.selected.value } != navItem) {
@@ -55,8 +51,7 @@ fun FloatingNav(navigator: Navigator, navItems: MutableMap<NavItem, Screen>) {
                         if (navItem.selected.value) Icon(
                             navItem.selectedIcon,
                             contentDescription = null,
-                            modifier = Modifier.background(Color.DarkGray, CircleShape).width(50.dp),
-                            tint = Color.White
+                            tint = Color.DarkGray
                         )
                         else Icon(
                             navItem.unselectedIcon,
