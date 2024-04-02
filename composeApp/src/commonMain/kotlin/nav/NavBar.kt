@@ -10,6 +10,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
@@ -35,14 +38,24 @@ data class NavItem(
     }
 }
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun FloatingNav(navigator: Navigator, navItems: MutableMap<NavItem, Screen>) {
+    val windowSizeClass = calculateWindowSizeClass()
+
+    val width = when (windowSizeClass.widthSizeClass) {
+        WindowWidthSizeClass.Expanded -> 0.5f
+        WindowWidthSizeClass.Medium -> 0.7f
+        WindowWidthSizeClass.Compact -> 0.9f
+        else -> 1f
+    }
+
     Row(
         modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
         horizontalArrangement = Arrangement.Center
     ) {
         NavigationBar(
-            modifier = Modifier.clip(CircleShape).fillMaxWidth(0.4f).height(60.dp),
+            modifier = Modifier.clip(CircleShape).fillMaxWidth(width).height(60.dp),
             containerColor = Color.Black.copy(alpha = 0.5f),
             tonalElevation = 0.dp
         ) {
