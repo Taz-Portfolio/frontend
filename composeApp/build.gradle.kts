@@ -35,6 +35,7 @@ kotlin {
             implementation(compose.components.resources)
 
             implementation(libs.precompose)
+            implementation(libs.windowSizeClass)
         }
 
         val wasmJsMain by getting {

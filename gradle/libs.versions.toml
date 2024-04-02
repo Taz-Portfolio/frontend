@@ -4,6 +4,7 @@ compose-plugin = "1.6.0"
 junit = "4.13.2"
 kotlin = "1.9.22"
 precompose = "1.6.0-rc04"
+windowSizeClass = "0.5.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -12,6 +13,7 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 precompose = { module = "moe.tlaster:precompose", version.ref = "precompose" }
+windowSizeClass = { module = "dev.chrisbanes.material3:material3-window-size-class-multiplatform", version.ref = "windowSizeClass" }
 
 [plugins]
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
