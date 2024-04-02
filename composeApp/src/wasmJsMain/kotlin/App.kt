@@ -26,25 +26,25 @@ val navItems = mutableMapOf(
         selectedIcon = Icons.Filled.Home,
         unselectedIcon = Icons.Outlined.Home,
         label = "Home",
-        selected = mutableStateOf(true)
+        isSelected = mutableStateOf(true)
     ) to HomeScreen,
     NavItem(
         selectedIcon = Icons.Filled.CheckCircle,
         unselectedIcon = Icons.Outlined.CheckCircle,
         label = "Projects",
-        selected = mutableStateOf(false)
+        isSelected = mutableStateOf(false)
     ) to ProjectsScreen,
     NavItem(
         selectedIcon = Icons.Filled.Email,
         unselectedIcon = Icons.Outlined.Email,
         label = "Contact",
-        selected = mutableStateOf(false)
+        isSelected = mutableStateOf(false)
     ) to ContactScreen,
     NavItem(
         selectedIcon = Icons.Filled.Favorite,
         unselectedIcon = Icons.Outlined.FavoriteBorder,
         label = "More",
-        selected = mutableStateOf(false)
+        isSelected = mutableStateOf(false)
     ) to MoreScreen
 )
 

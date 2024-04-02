@@ -24,8 +24,16 @@ data class NavItem(
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector,
     val label: String,
-    var selected: MutableState<Boolean>,
-)
+    var isSelected: MutableState<Boolean>,
+) {
+    fun select() {
+        isSelected.value = true
+    }
+
+    fun deselect() {
+        isSelected.value = false
+    }
+}
 
 @Composable
 fun FloatingNav(navigator: Navigator, navItems: MutableMap<NavItem, Screen>) {
@@ -38,17 +46,12 @@ fun FloatingNav(navigator: Navigator, navItems: MutableMap<NavItem, Screen>) {
             containerColor = Color.Black.copy(alpha = 0.5f),
             tonalElevation = 0.dp
         ) {
-            navItems.forEach { (navItem, screen) ->
+            navItems.forEach { (navItem, _) ->
                 NavigationBarItem(
-                    selected = navItem.selected.value,
-                    onClick = {
-                        if (navItems.keys.first { it.selected.value } != navItem) {
-                            navItems.keys.forEach { it.selected.value = it == navItem }
-                            navigator.navigate(screen.route)
-                        }
-                    },
+                    selected = navItem.isSelected.value,
+                    onClick = { changeSelection(navItems, navItem, navigator) },
                     icon = {
-                        if (navItem.selected.value) Icon(
+                        if (navItem.isSelected.value) Icon(
                             navItem.selectedIcon,
                             contentDescription = null,
                             tint = Color.DarkGray
@@ -65,5 +68,15 @@ fun FloatingNav(navigator: Navigator, navItems: MutableMap<NavItem, Screen>) {
                 )
             }
         }
+    }
+}
+
+fun changeSelection(navItems: Map<NavItem, Screen>, newSelection: NavItem, navigator: Navigator) {
+    val currentSelection = navItems.keys.first { it.isSelected.value }
+
+    if (currentSelection != newSelection) {
+        currentSelection.deselect()
+        newSelection.select()
+        navigator.navigate(navItems[newSelection]!!.route)
     }
 }
