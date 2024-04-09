@@ -10,13 +10,16 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import api.DataAPI
-import api.model.Info
+import api.API
+import api.Endpoint
+import api.responses.Info
 
-val info: MutableState<Info> = DataAPI.fetchInfo()
+val info = mutableStateOf(Info())
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 data object HomeScreen: Screen("/home", {
+    API.fetch(Endpoint.INFO, info)
+
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
