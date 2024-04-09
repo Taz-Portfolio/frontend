@@ -2,9 +2,10 @@ import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    
     alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.kmpNativeCoroutines)
 }
 
 kotlin {
@@ -36,6 +37,10 @@ kotlin {
 
             implementation(libs.precompose)
             implementation(libs.windowSizeClass)
+            implementation(libs.kotlinx.coroutines)
+            implementation(libs.kmmViewModel)
+
+            implementation(libs.bundles.ktor.common)
         }
 
         val wasmJsMain by getting {
@@ -46,4 +51,9 @@ kotlin {
 
 compose.experimental {
     web.application {}
+}
+
+compose {
+    kotlinCompilerPlugin.set(libs.versions.compose.compiler)
+    kotlinCompilerPluginArgs.add("suppressKotlinVersionCompatibilityCheck=${libs.versions.kotlin}")
 }

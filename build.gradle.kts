@@ -3,4 +3,6 @@ plugins {
     // in each subproject's classloader
     alias(libs.plugins.jetbrainsCompose) apply false
     alias(libs.plugins.kotlinMultiplatform) apply false
+    alias(libs.plugins.kotlinxSerialization) apply false
+    alias(libs.plugins.kmpNativeCoroutines) apply false
 }
