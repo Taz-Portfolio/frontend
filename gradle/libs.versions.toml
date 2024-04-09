@@ -1,10 +1,10 @@
 [versions]
 compose = "1.6.4"
 compose-plugin = "1.6.0"
-compose-compiler = "1.5.6-dev2-kt2.0.0-Beta3"
 junit = "4.13.2"
 kotlin = "2.0.0-Beta3"
-precompose = "1.6.0-rc04"
+compose-compiler = "1.5.6-dev2-kt2.0.0-Beta3"
+precompose = "1.6.0"
 windowSizeClass = "0.5.0"
 ktor = "3.0.0-wasm2"
 kotlinx-coroutines = "1.8.0"
