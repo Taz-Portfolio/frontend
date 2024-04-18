@@ -39,12 +39,24 @@ kotlin {
             implementation(libs.windowSizeClass)
             implementation(libs.kotlinx.coroutines)
             implementation(libs.kmmViewModel)
+            implementation(libs.imageLoader)
 
             implementation(libs.bundles.ktor.common)
         }
 
         val wasmJsMain by getting {
-            dependencies {}
+            dependencies {
+
+            }
+        }
+    }
+}
+
+configurations.all {
+    if (name.startsWith("wasmJs")) {
+        resolutionStrategy.eachDependency {
+            if (requested.group.startsWith("io.ktor") && requested.name.startsWith("ktor-"))
+                useVersion(libs.versions.ktor.get())
         }
     }
 }
